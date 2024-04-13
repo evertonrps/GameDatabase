@@ -1,9 +1,9 @@
+using Asp.Versioning;
 using AutoMapper;
 using GameDatabase.API.ViewModels;
 using GameDatabase.Domain.AggregatesModel.GameAggregate;
 using GameDatabase.Domain.AggregatesModel.GameAggregate.Interfaces;
 using GameDatabase.Domain.Interfaces.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameDatabase.API.Controllers.v1;

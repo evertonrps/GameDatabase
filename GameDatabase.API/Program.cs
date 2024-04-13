@@ -1,9 +1,10 @@
 using System.Reflection;
+using Asp.Versioning;
+using GameDatabase.API.Mapper;
 using GameDatabase.API.Schema.Formatters;
 using GameDatabase.API.Schema.Mutations;
 using GameDatabase.IoC;
 using GlobalExceptionHandler.WebApi;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Serilog;
@@ -14,19 +15,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddApiVersioning(v =>
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddApiVersioning(options =>
 {
-    v.DefaultApiVersion = new ApiVersion(1, 0);
-    v.ReportApiVersions = true;
-    v.AssumeDefaultVersionWhenUnspecified = true;
-});
-builder.Services.AddVersionedApiExplorer(e =>
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+}).AddApiExplorer(e =>
 {
     e.GroupNameFormat = "'v'VVV";
     e.SubstituteApiVersionInUrl = true;
 });
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddSwaggerGen(s =>
 {
     s.SwaggerDoc("v1", new OpenApiInfo{ Title = "Game Database", Version = "v1"});
@@ -63,6 +63,7 @@ builder.Services.AddSwaggerGen(s =>
         }
     });
 });
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 BootStrapper.ConfigureServices(builder.Services);
 builder.Host.UseSerilog(Log.Logger);
 

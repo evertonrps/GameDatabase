@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Asp.Versioning;
 using AutoMapper;
 using GameDatabase.API.ViewModels;
 using GameDatabase.Domain.AggregatesModel.GameAggregate;
