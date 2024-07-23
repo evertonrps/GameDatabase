@@ -1,12 +1,10 @@
 using System.Reflection;
 using Asp.Versioning;
-using GameDatabase.API.Mapper;
+using GameDatabase.API.Filters;
 using GameDatabase.API.Schema.Formatters;
 using GameDatabase.API.Schema.Mutations;
 using GameDatabase.IoC;
-using GlobalExceptionHandler.WebApi;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
 using Serilog;
 using Path = System.IO.Path;
 
@@ -26,7 +24,7 @@ builder.Services.AddApiVersioning(options =>
     e.GroupNameFormat = "'v'VVV";
     e.SubstituteApiVersionInUrl = true;
 });
-
+builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddSwaggerGen(s =>
 {
     s.SwaggerDoc("v1", new OpenApiInfo{ Title = "Game Database", Version = "v1"});
@@ -63,6 +61,7 @@ builder.Services.AddSwaggerGen(s =>
         }
     });
 });
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 BootStrapper.ConfigureServices(builder.Services);
 builder.Host.UseSerilog(Log.Logger);
@@ -86,21 +85,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseGlobalExceptionHandler(x =>
-{
-    x.ContentType = "application/json";
-    x.ResponseBody(s=> JsonConvert.SerializeObject(new
-    {
-        Message = s.Message ?? $"An error ocurred whilst processing your request"
-    }));
-    
-    x.Map<UnauthorizedAccessException>().ToStatusCode(StatusCodes.Status401Unauthorized)
-        .WithBody((ex, context) => JsonConvert.SerializeObject(new
-        {
-            Message = ex.Message
-        }));
-});
+app.UseExceptionHandler(_ => { });
 
 //GraphQL
 app.MapGraphQL();

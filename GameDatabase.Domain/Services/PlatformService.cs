@@ -1,5 +1,6 @@
 ﻿using GameDatabase.Domain.AggregatesModel.GameAggregate;
 using GameDatabase.Domain.AggregatesModel.GameAggregate.Interfaces;
+using GameDatabase.Domain.Exceptions;
 using GameDatabase.Domain.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 
@@ -40,12 +41,18 @@ public class PlatformService : IPlatformService
     {
         try
         {
-            return  await _repository.GetById(id);
+            var retorno =  await _repository.GetById(id);
+            if (retorno == default)
+            {
+                throw new RecordNotFoundException($"Registro não encontrado id: {id}");
+            }
+
+            return retorno;
         }
         catch (Exception e)
         {
             _logger.LogError(e,"Falha ao buscar game");
-            return default;
+            throw;
         }
     }
 }
