@@ -12,9 +12,7 @@ public class CustomHttpResponseFormatter : DefaultHttpResponseFormatter
     {
         if (result.Errors?.Count > 0 &&
             result.Errors.Any(error => error.Code == "SOME_AUTH_ISSUE"))
-        {
             return HttpStatusCode.Forbidden;
-        }
 
         // In all other cases let Hot Chocolate figure out the
         // appropriate status code.

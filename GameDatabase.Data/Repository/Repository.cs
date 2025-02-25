@@ -37,23 +37,16 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     {
         try
         {
-            if (string.IsNullOrEmpty(include))
-                return await DbSet.SingleOrDefaultAsync(match);
-            else
-                //Include
-            {
-                var args = include.Split(',');
-                TEntity entidade = null;
-                foreach (var item in args)
-                {
-                    if (!string.IsNullOrEmpty(item.Trim()))
-                    {
-                        entidade = await DbSet.Include(item.Trim()).SingleOrDefaultAsync(match);
-                    }
-                }
+            if (string.IsNullOrEmpty(include)) return await DbSet.SingleOrDefaultAsync(match);
 
-                return entidade;
-            }
+            //Include
+            var args = include.Split(',');
+            TEntity entidade = null;
+            foreach (var item in args)
+                if (!string.IsNullOrEmpty(item.Trim()))
+                    entidade = await DbSet.Include(item.Trim()).SingleOrDefaultAsync(match);
+
+            return entidade;
         }
         catch (Exception ex)
         {
@@ -71,24 +64,15 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
 
             if (string.IsNullOrEmpty(include))
                 return await DbSet.Where(match).ToListAsync();
-            else
-            {
-                {
-                    var args = include.Split(',');
+            var args = include.Split(',');
 
-                    foreach (var item in args)
-                    {
-                        if (!string.IsNullOrEmpty(item.Trim()))
-                        {
-                            query = query.Include(item.Trim());
-                        }
-                    }
+            foreach (var item in args)
+                if (!string.IsNullOrEmpty(item.Trim()))
+                    query = query.Include(item.Trim());
 
-                    query = query.Where(match);
+            query = query.Where(match);
 
-                    return list = new List<TEntity>(query);
-                }
-            }
+            return list = new List<TEntity>(query);
         }
         catch (Exception ex)
         {

@@ -27,13 +27,13 @@ builder.Services.AddApiVersioning(options =>
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddSwaggerGen(s =>
 {
-    s.SwaggerDoc("v1", new OpenApiInfo{ Title = "Game Database", Version = "v1"});
-    s.SwaggerDoc("v2", new OpenApiInfo{ Title = "Game Database", Version = "v2"});
+    s.SwaggerDoc("v1", new OpenApiInfo { Title = "Game Database", Version = "v1" });
+    s.SwaggerDoc("v2", new OpenApiInfo { Title = "Game Database", Version = "v2" });
 
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     s.IncludeXmlComments(xmlPath);
-    
+
     s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization",
@@ -42,8 +42,8 @@ builder.Services.AddSwaggerGen(s =>
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
-    
-    s.AddSecurityRequirement(new OpenApiSecurityRequirement()
+
+    s.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
             new OpenApiSecurityScheme
@@ -55,7 +55,7 @@ builder.Services.AddSwaggerGen(s =>
                 },
                 Scheme = "oauth2",
                 Name = "Bearer",
-                In = ParameterLocation.Header,
+                In = ParameterLocation.Header
             },
             new List<string>()
         }
@@ -85,6 +85,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseExceptionHandler(_ => { });
 
 //GraphQL

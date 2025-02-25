@@ -15,16 +15,16 @@ public static class BootStrapper
         //Serilog
         LogConfiguration.CreateLogger();
         services.AddLogging(builder => { builder.AddSerilog(); });
-        
+
         //DbContext
         services.AddDbContext<GameDatabaseContext>();
-        
+
         //Services
         services.AddScoped(typeof(IDeveloperService), typeof(DeveloperService));
         services.AddScoped(typeof(IGameService), typeof(GameService));
         services.AddScoped(typeof(IPlatformService), typeof(PlatformService));
         services.AddScoped(typeof(IGamePlatformService), typeof(GamePlatformService));
-        
+
         //Repositories
         services.AddScoped(typeof(IGameRepository), typeof(GameRepository));
         services.AddScoped(typeof(IDeveloperRepository), typeof(DeveloperRepository));

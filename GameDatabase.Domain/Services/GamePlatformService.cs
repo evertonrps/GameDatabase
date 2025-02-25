@@ -7,8 +7,8 @@ namespace GameDatabase.Domain.Services;
 
 public class GamePlatformService : IGamePlatformService
 {
-    private readonly IGamePlatformRepository _repository;
     private readonly ILogger<GameService> _logger;
+    private readonly IGamePlatformRepository _repository;
 
     public GamePlatformService(IGamePlatformRepository repository, ILogger<GameService> logger)
     {
@@ -25,13 +25,13 @@ public class GamePlatformService : IGamePlatformService
     {
         try
         {
-           await _repository.Add(gamePlatform);
-           await _repository.SaveChanges();
+            await _repository.Add(gamePlatform);
+            await _repository.SaveChanges();
             return true;
         }
         catch (Exception e)
         {
-            _logger.LogError(e,"Falha ao inserir novo game");
+            _logger.LogError(e, "Falha ao inserir novo game");
             return false;
         }
     }
@@ -44,9 +44,8 @@ public class GamePlatformService : IGamePlatformService
         }
         catch (Exception e)
         {
-            _logger.LogError(e,"Falha ao buscar game platform");
+            _logger.LogError(e, "Falha ao buscar game platform");
             return default;
         }
     }
 }
-

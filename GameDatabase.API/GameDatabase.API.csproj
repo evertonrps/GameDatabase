@@ -8,32 +8,32 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
-        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
-        <PackageReference Include="AutoMapper" Version="13.0.1" />
-        <PackageReference Include="HotChocolate.AspNetCore" Version="13.9.7" />
-        <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.9.7" />
-        <PackageReference Include="HotChocolate.PersistedQueries.FileSystem" Version="13.9.7" />
+        <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0"/>
+        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0"/>
+        <PackageReference Include="AutoMapper" Version="13.0.1"/>
+        <PackageReference Include="HotChocolate.AspNetCore" Version="13.9.7"/>
+        <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.9.7"/>
+        <PackageReference Include="HotChocolate.PersistedQueries.FileSystem" Version="13.9.7"/>
         <PackageReference Include="HotChocolate.Types.Analyzers" Version="13.9.7">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="HotChocolate.Types.Json" Version="13.9.7" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+        <PackageReference Include="HotChocolate.Types.Json" Version="13.9.7"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\GameDatabase.Domain\GameDatabase.Domain.csproj" />
-      <ProjectReference Include="..\GameDatabase.IoC\GameDatabase.IoC.csproj" />
+        <ProjectReference Include="..\GameDatabase.Domain\GameDatabase.Domain.csproj"/>
+        <ProjectReference Include="..\GameDatabase.IoC\GameDatabase.IoC.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\v2" />
-      <Folder Include="Schema\Filters" />
-      <Folder Include="Schema\Sorters" />
-      <Folder Include="Schema\Subscriptions" />
+        <Folder Include="Controllers\v2"/>
+        <Folder Include="Schema\Filters"/>
+        <Folder Include="Schema\Sorters"/>
+        <Folder Include="Schema\Subscriptions"/>
     </ItemGroup>
 
 </Project>

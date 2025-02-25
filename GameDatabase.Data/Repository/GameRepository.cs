@@ -16,8 +16,8 @@ public class GameRepository : Repository<Game>, IGameRepository
 
     public IEnumerable<Game> RecuperaGamesCompletos()
     {
-       // return _context.Games.Include(c => c.GamePlatform).ThenInclude(c => c.Platform).ToList();
-       throw new NotImplementedException();
+        // return _context.Games.Include(c => c.GamePlatform).ThenInclude(c => c.Platform).ToList();
+        throw new NotImplementedException();
     }
 
     public dynamic ObterGameCompletoPorID(int id)

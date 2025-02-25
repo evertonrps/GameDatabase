@@ -6,11 +6,8 @@ namespace GameDatabase.Domain.SeedWork;
 
 public class BaseValidator
 {
-    #region properties     
-    public List<ValidationFailure> Erros { get; private set; }
-    #endregion
-
     #region constructors
+
     public BaseValidator()
     {
         Erros = new List<ValidationFailure>();
@@ -18,9 +15,15 @@ public class BaseValidator
 
     #endregion
 
-    private List<ValidationFailure> getValidation<T>(T obj)
+    #region properties
+
+    public List<ValidationFailure> Erros { get; }
+
+    #endregion
+
+    private List<ValidationFailure> GetValidation<T>(T obj)
     {
-        List<ValidationFailure> list = new List<ValidationFailure> { };
+        var list = new List<ValidationFailure>();
 
         if (obj == null)
             return list;
@@ -31,16 +34,15 @@ public class BaseValidator
         properties.ForEach(p =>
         {
             if (p.PropertyType == typeof(ValidationFailure))
-            {
-                list.AddRange(obj as List<ValidationFailure>);
-            }
+                list.AddRange(obj as List<ValidationFailure> ?? throw new InvalidOperationException());
             else if (p.PropertyType.IsClass && p.PropertyType.Namespace != "System")
-                list.AddRange(getValidation(p.GetValue(obj, null)));
+                list.AddRange(GetValidation(p.GetValue(obj, null)));
         });
 
         return list;
     }
-    private void setValidation(ValidationResult failures)
+
+    private void SetValidation(ValidationResult failures)
     {
         Erros.AddRange(failures.Errors);
     }
@@ -48,21 +50,19 @@ public class BaseValidator
     public void ValidateNow<T>(AbstractValidator<T> validator, T instance)
     {
         var falhaValidacao = validator.Validate(instance);
-        setValidation(falhaValidacao);
+        SetValidation(falhaValidacao);
     }
 
     public bool IsValid()
     {
-        var erros = getValidation(this);
+        var erros = GetValidation(this);
         if (erros.Count > 0)
         {
             Erros.Clear();
             Erros.AddRange(erros);
             return false;
         }
-        else
-        {
-            return true;
-        }
+
+        return true;
     }
 }

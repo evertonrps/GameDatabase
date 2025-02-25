@@ -8,15 +8,15 @@ namespace GameDatabase.Domain.Services;
 
 public class PlatformService : IPlatformService
 {
-    private readonly IPlatformRepository _repository;
     private readonly ILogger<PlatformService> _logger;
+    private readonly IPlatformRepository _repository;
 
     public PlatformService(IPlatformRepository repository, ILogger<PlatformService> logger)
     {
         _repository = repository;
         _logger = logger;
     }
-    
+
     public Task<IEnumerable<Platform>> GetAll()
     {
         return _repository.GetAll();
@@ -32,7 +32,7 @@ public class PlatformService : IPlatformService
         }
         catch (Exception e)
         {
-            _logger.LogError(e,"Falha ao inserir novo game");
+            _logger.LogError(e, "Falha ao inserir novo game");
             return false;
         }
     }
@@ -41,17 +41,14 @@ public class PlatformService : IPlatformService
     {
         try
         {
-            var retorno =  await _repository.GetById(id);
-            if (retorno == default)
-            {
-                throw new RecordNotFoundException($"Registro não encontrado id: {id}");
-            }
+            var retorno = await _repository.GetById(id);
+            if (retorno == default) throw new RecordNotFoundException($"Registro não encontrado id: {id}");
 
             return retorno;
         }
         catch (Exception e)
         {
-            _logger.LogError(e,"Falha ao buscar game");
+            _logger.LogError(e, "Falha ao buscar game");
             throw;
         }
     }

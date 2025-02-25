@@ -9,5 +9,4 @@ public class DeveloperType : ObjectType<Developer>
         descriptor.Ignore(f => f.Erros);
         base.Configure(descriptor);
     }
-    
 }

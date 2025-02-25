@@ -1,4 +1,5 @@
-﻿using GameDatabase.Domain.AggregatesModel.GameAggregate;
+﻿using FluentValidation.Results;
+using GameDatabase.Domain.AggregatesModel.GameAggregate;
 using GameDatabase.Domain.AggregatesModel.GameAggregate.Interfaces;
 using GameDatabase.Domain.Interfaces.Services;
 using Microsoft.Extensions.Logging;
@@ -15,6 +16,7 @@ public class DeveloperService : IDeveloperService
         _developerRepository = developerRepository;
         _logger = logger;
     }
+
     public async Task<IEnumerable<Developer>> GetAll()
     {
         return await _developerRepository.GetAll();
@@ -23,15 +25,23 @@ public class DeveloperService : IDeveloperService
     public async Task<Developer> CreateDeveloper(Developer developer)
     {
         try
-        {  await _developerRepository.Add(developer);
-           await _developerRepository.SaveChanges();
-           return developer;
+        {
+            if (developer.IsValid())
+            {
+                await _developerRepository.Add(developer);
+                await _developerRepository.SaveChanges();
+                return developer;
+            }
+
+            _logger.LogError("Developer invalid");
         }
         catch (Exception e)
         {
-            _logger.LogError(e,"Falha ao criar novo developer");
-            return default;
+            _logger.LogError(e, "Fail create new developer");
+            developer.Erros.Add(new ValidationFailure("",e.Message));
         }
+
+        return developer;
     }
 
     public async Task<Developer> GetById(int id)
@@ -42,7 +52,7 @@ public class DeveloperService : IDeveloperService
         }
         catch (Exception e)
         {
-            _logger.LogError(e,"Erro ao bucar developer");
+            _logger.LogError(e, "Erro ao bucar developer");
             return default;
         }
     }

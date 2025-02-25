@@ -20,7 +20,7 @@ public sealed class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExcept
                     Type = argumentNullException.GetType().Name,
                     Title = "An unexpected error occurred",
                     Detail = argumentNullException.Message,
-                    Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}",
+                    Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}"
                 };
                 logger.LogError(argumentNullException, $"Exception occured : {argumentNullException.Message}");
                 break;
@@ -31,7 +31,7 @@ public sealed class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExcept
                     Type = recordNotFoundException.GetType().Name,
                     Title = "Registro não encontrado",
                     Detail = recordNotFoundException.Message,
-                    Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}",
+                    Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}"
                 };
                 httpContext.Response.StatusCode = 404;
                 logger.LogError(recordNotFoundException, $"Exception occured : {recordNotFoundException.Message}");
@@ -48,7 +48,8 @@ public sealed class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExcept
                 logger.LogError(exception, $"Exception occured : {exception.Message}");
                 break;
         }
-        await httpContext.Response.WriteAsJsonAsync(result, cancellationToken: cancellationToken);
+
+        await httpContext.Response.WriteAsJsonAsync(result, cancellationToken);
         return true;
     }
 }

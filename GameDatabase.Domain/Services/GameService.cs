@@ -7,8 +7,8 @@ namespace GameDatabase.Domain.Services;
 
 public class GameService : IGameService
 {
-    private readonly IGameRepository _repository;
     private readonly ILogger<GameService> _logger;
+    private readonly IGameRepository _repository;
 
     public GameService(IGameRepository repository, ILogger<GameService> logger)
     {
@@ -31,7 +31,7 @@ public class GameService : IGameService
         }
         catch (Exception e)
         {
-            _logger.LogError(e,"Falha ao inserir novo game");
+            _logger.LogError(e, "Falha ao inserir novo game");
             return false;
         }
     }
@@ -40,11 +40,11 @@ public class GameService : IGameService
     {
         try
         {
-            return await  _repository.GetById(id);
+            return await _repository.GetById(id);
         }
         catch (Exception e)
         {
-            _logger.LogError(e,"Falha ao buscar game");
+            _logger.LogError(e, "Falha ao buscar game");
             return default;
         }
     }

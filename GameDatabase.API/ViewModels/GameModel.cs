@@ -7,5 +7,3 @@ public class GameModel
     public string Description { get; set; }
     public int DeveloperId { get; set; }
 }
-
-

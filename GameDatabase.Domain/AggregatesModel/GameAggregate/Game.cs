@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
 using GameDatabase.Domain.SeedWork;
 
 namespace GameDatabase.Domain.AggregatesModel.GameAggregate;
 
 public class Game : Entity<Game>
 {
-    public string Title { get; private set; }
-    public string Description { get; private set; }
-    public int DeveloperId { get; private set; }
-
     protected Game()
     {
     }
@@ -21,6 +15,14 @@ public class Game : Entity<Game>
         DeveloperId = _DeveloperId;
     }
 
+    public string Title { get; private set; }
+    public string Description { get; private set; }
+    public int DeveloperId { get; private set; }
+
+    //EF
+    public virtual Developer Developer { get; set; }
+    public virtual ICollection<GamePlatform> GamePlatform { get; set; }
+
     public static Game Factory(string title, string description, int developerId)
     {
         var game = new Game(title, description, developerId);
@@ -28,13 +30,7 @@ public class Game : Entity<Game>
         return game;
     }
 
-    //EF
-    public virtual Developer Developer { get; set; }
-    public virtual ICollection<GamePlatform> GamePlatform { get; set; }
-
     //public virtual ICollection<Platform> Platform { get; set; }
 
-   // public virtual ICollection<GamePlatform> GamePlatform { get; set; }
-
+    // public virtual ICollection<GamePlatform> GamePlatform { get; set; }
 }
-

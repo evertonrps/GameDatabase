@@ -4,7 +4,7 @@ using GameDatabase.Domain.AggregatesModel.GameAggregate.Interfaces;
 
 namespace GameDatabase.Data.Repository;
 
-public class GamePlatformRespository: Repository<GamePlatform>, IGamePlatformRepository
+public class GamePlatformRespository : Repository<GamePlatform>, IGamePlatformRepository
 {
     public GamePlatformRespository(GameDatabaseContext context) : base(context)
     {

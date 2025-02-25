@@ -1,18 +1,9 @@
-
-using System;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Asp.Versioning;
 using AutoMapper;
 using GameDatabase.API.ViewModels;
 using GameDatabase.Domain.AggregatesModel.GameAggregate;
-using GameDatabase.Domain.AggregatesModel.GameAggregate.Interfaces;
 using GameDatabase.Domain.Interfaces.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace GameDatabase.API.Controllers;
 
@@ -21,11 +12,10 @@ namespace GameDatabase.API.Controllers;
 [ApiController]
 public class GamePlatformController : ControllerBase
 {
-    
     private readonly IGamePlatformService _gameService;
     private readonly IMapper _mapper;
 
-    public GamePlatformController(IGamePlatformService gameService, IMapper mapper)        
+    public GamePlatformController(IGamePlatformService gameService, IMapper mapper)
     {
         _gameService = gameService;
         _mapper = mapper;
@@ -51,9 +41,7 @@ public class GamePlatformController : ControllerBase
     public async Task<IActionResult> NewGamePlatform(GamePlatformModel model)
     {
         var game = _mapper.Map<GamePlatform>(model);
-        bool created = await _gameService.CreateGamePlatform(game);
+        var created = await _gameService.CreateGamePlatform(game);
         return Ok(created);
     }
 }
-
-

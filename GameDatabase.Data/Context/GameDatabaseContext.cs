@@ -9,15 +9,15 @@ namespace GameDatabase.Data.Context;
 
 public class GameDatabaseContext : DbContext
 {
-    public DbSet<Game> Games { get; set; }
-    public DbSet<Developer> Developers { get; set; }
-    public DbSet<Platform> Platforms { get; set; }
-    public DbSet<GamePlatform> GamePlatforms { get; set; }
-
     public GameDatabaseContext()
     {
         Database.EnsureCreated();
     }
+
+    public DbSet<Game> Games { get; set; }
+    public DbSet<Developer> Developers { get; set; }
+    public DbSet<Platform> Platforms { get; set; }
+    public DbSet<GamePlatform> GamePlatforms { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

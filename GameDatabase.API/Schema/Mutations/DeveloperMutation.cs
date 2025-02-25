@@ -13,48 +13,39 @@ public class DeveloperMutation
     {
         _developerService = developerService;
     }
-    
+
     [Error(typeof(MyCustomErrorA))]
     [Error(typeof(MyCustomErrorB))]
     public async Task<MutationResult<Developer>> CreateDeveloper(string name, DateTime founded, string site)
     {
         var errors = new List<object>();
-        if (founded > DateTime.Today)
-        {
-            errors.Add(new MyCustomErrorA("Data inválida"));
-        }
+        if (founded > DateTime.Today) errors.Add(new MyCustomErrorA("Data inválida"));
 
-        if (name == "string")
-        {
-            errors.Add(new MyCustomErrorB("Name invalido"));
-        }
+        if (name == "string") errors.Add(new MyCustomErrorB("Name invalido"));
 
-        if (errors.Count > 0)
-        {
-            return new MutationResult<Developer>(errors);
-        }
-      return  await _developerService.CreateDeveloper(Developer.Factory(name, founded, site));
+        if (errors.Count > 0) return new MutationResult<Developer>(errors);
+        return await _developerService.CreateDeveloper(Developer.Factory(name, founded, site));
     }
 }
 
 public class DomainExceptionA
 {
-    public string Message { get;}
-
     public DomainExceptionA(string message)
     {
-        Message = message; 
+        Message = message;
     }
+
+    public string Message { get; }
 }
 
 public class DomainExceptionB
 {
-    public string Message { get;}
-
     public DomainExceptionB(string message)
     {
-        Message = message; 
+        Message = message;
     }
+
+    public string Message { get; }
 }
 
 public class UserNameTakenError
@@ -65,16 +56,6 @@ public class CreateUserErrorFactory
     : IPayloadErrorFactory<MyCustomError, DomainExceptionA>
         , IPayloadErrorFactory<MyCustomError, DomainExceptionB>
 {
-    public MyCustomError CreateErrorFrom(DomainExceptionA ex)
-    {
-        return new MyCustomErrorA(ex.Message);
-    }
-
-    public MyCustomError CreateErrorFrom(DomainExceptionB ex)
-    {
-        return new MyCustomErrorB(ex.Message);
-    }
-
     DomainExceptionA IPayloadErrorFactory<MyCustomError, DomainExceptionA>.CreateErrorFrom(MyCustomError exception)
     {
         return new DomainExceptionA(exception.Message);
@@ -84,6 +65,16 @@ public class CreateUserErrorFactory
     {
         return new DomainExceptionB(exception.Message);
     }
+
+    public MyCustomError CreateErrorFrom(DomainExceptionA ex)
+    {
+        return new MyCustomErrorA(ex.Message);
+    }
+
+    public MyCustomError CreateErrorFrom(DomainExceptionB ex)
+    {
+        return new MyCustomErrorB(ex.Message);
+    }
 }
 
 public class MyCustomErrorB : MyCustomError
@@ -92,6 +83,7 @@ public class MyCustomErrorB : MyCustomError
     {
         Message = message;
     }
+
     public string Message { get; set; }
 }
 
@@ -101,6 +93,7 @@ public class MyCustomErrorA : MyCustomError
     {
         Message = message;
     }
+
     public string Message { get; set; }
 }
 

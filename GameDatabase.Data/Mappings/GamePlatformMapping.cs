@@ -20,7 +20,7 @@ public class GamePlatformMapping : EntityTypeConfiguration<GamePlatform>
             .HasForeignKey(p => p.PlatformId);
 
         builder.Ignore(e => e.Platform);
-        
+
         builder.Ignore(e => e.Erros);
 
         builder.ToTable("GamePlatform");

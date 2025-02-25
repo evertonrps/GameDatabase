@@ -17,7 +17,7 @@ public class GameController : ControllerBase
     private readonly IMapper _mapper;
     private readonly IGameRepository _repository;
 
-    public GameController(IGameService gameService, IMapper mapper)        
+    public GameController(IGameService gameService, IMapper mapper)
     {
         _gameService = gameService;
         _mapper = mapper;
@@ -43,9 +43,7 @@ public class GameController : ControllerBase
     public async Task<IActionResult> NewGame(GameModel model)
     {
         var game = _mapper.Map<Game>(model);
-        bool created = await _gameService.CreateGame(game);
+        var created = await _gameService.CreateGame(game);
         return Ok(created);
     }
 }
-
-

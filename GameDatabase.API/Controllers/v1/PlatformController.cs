@@ -12,10 +12,10 @@ namespace GameDatabase.API.Controllers.v1;
 [ApiController]
 public class PlatformController : ControllerBase
 {
-    private readonly IPlatformService _platformService;
     private readonly IMapper _mapper;
+    private readonly IPlatformService _platformService;
 
-    public PlatformController(IPlatformService platformService, IMapper mapper)        
+    public PlatformController(IPlatformService platformService, IMapper mapper)
     {
         _platformService = platformService;
         _mapper = mapper;
@@ -41,10 +41,7 @@ public class PlatformController : ControllerBase
     public async Task<IActionResult> NewGame(PlatformModel model)
     {
         var platform = _mapper.Map<Platform>(model);
-        bool created = await _platformService.CreatePlatform(platform);
+        var created = await _platformService.CreatePlatform(platform);
         return Ok(created);
     }
-
 }
-
-
