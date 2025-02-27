@@ -15,7 +15,6 @@ public class GameController : ControllerBase
 {
     private readonly IGameService _gameService;
     private readonly IMapper _mapper;
-    private readonly IGameRepository _repository;
 
     public GameController(IGameService gameService, IMapper mapper)
     {
@@ -23,15 +22,27 @@ public class GameController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Get a list of all games.
+    /// </summary>
+    /// <returns>All games as a list.</returns>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
         var games = await _gameService.GetAll();
         var ret = _mapper.Map<IEnumerable<GameModel>>(games);
         return Ok(ret);
     }
-
+    
+    /// <summary>
+    /// Get a game by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the game.</param>
+    /// <returns>The game.</returns>
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(int id)
     {
         var game = await _gameService.GetById(id);
@@ -39,7 +50,14 @@ public class GameController : ControllerBase
         return Ok(ret);
     }
 
+    /// <summary>
+    /// Create a new game.
+    /// </summary>
+    /// <param name="model">The game model.</param>
+    /// <returns>Newly created game.</returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> NewGame(GameModel model)
     {
         var game = _mapper.Map<Game>(model);

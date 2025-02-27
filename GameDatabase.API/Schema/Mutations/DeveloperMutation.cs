@@ -84,17 +84,12 @@ public class MyCustomErrorB : MyCustomError
         Message = message;
     }
 
-    public string Message { get; set; }
+    public override string Message { get; }
 }
 
-public class MyCustomErrorA : MyCustomError
+public class MyCustomErrorA(string message) : MyCustomError
 {
-    public MyCustomErrorA(string message)
-    {
-        Message = message;
-    }
-
-    public string Message { get; set; }
+    public override string Message { get; } = message;
 }
 
 public class MyCustomError : Exception

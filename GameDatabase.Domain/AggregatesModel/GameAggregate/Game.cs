@@ -1,4 +1,5 @@
 using GameDatabase.Domain.SeedWork;
+using System.Collections.Generic;
 
 namespace GameDatabase.Domain.AggregatesModel.GameAggregate;
 
@@ -6,13 +7,14 @@ public class Game : Entity<Game>
 {
     protected Game()
     {
+        GamePlatform = new List<GamePlatform>();
     }
 
-    private Game(string title, string _description, int _DeveloperId)
+    private Game(string title, string description, int developerId) : this()
     {
         Title = title;
-        Description = _description;
-        DeveloperId = _DeveloperId;
+        Description = description;
+        DeveloperId = developerId;
     }
 
     public string Title { get; private set; }
@@ -29,8 +31,4 @@ public class Game : Entity<Game>
         game.ValidateNow(new GameValidator(), game);
         return game;
     }
-
-    //public virtual ICollection<Platform> Platform { get; set; }
-
-    // public virtual ICollection<GamePlatform> GamePlatform { get; set; }
 }

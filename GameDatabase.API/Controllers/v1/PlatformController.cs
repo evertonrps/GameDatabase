@@ -21,7 +21,12 @@ public class PlatformController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Get a list of all game platforms.
+    /// </summary>
+    /// <returns>All game platforms as a list.</returns>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
         var games = await _platformService.GetAll();
@@ -29,7 +34,14 @@ public class PlatformController : ControllerBase
         return Ok(ret);
     }
 
+    /// <summary>
+    /// Get a game platform by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the game platform.</param>
+    /// <returns>The game platform.</returns>
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(int id)
     {
         var game = await _platformService.GetById(id);
@@ -37,7 +49,14 @@ public class PlatformController : ControllerBase
         return Ok(ret);
     }
 
+    /// <summary>
+    /// Create a new game platform.
+    /// </summary>
+    /// <param name="model">The game platform model.</param>
+    /// <returns>Newly created game platform.</returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> NewGame(PlatformModel model)
     {
         var platform = _mapper.Map<Platform>(model);

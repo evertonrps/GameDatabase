@@ -22,6 +22,15 @@ public class Developer : Entity<Developer>
 
     public virtual ICollection<Game>? Games { get; set; }
 
+    public bool ChangeWebSite(string newWebSite)
+    {
+        if (string.IsNullOrEmpty(newWebSite))
+            return false;
+
+        WebSite = newWebSite;
+        return true;
+    }
+
     public static Developer Factory(string name, DateTime founded, string webSite)
     {
         var developer = new Developer(name, founded, webSite);
