@@ -15,7 +15,6 @@ public class DeveloperController : ControllerBase
 {
     private readonly IDeveloperService _developerService;
     private readonly IMapper _mapper;
-    private readonly IDeveloperRepository _repository;
 
     public DeveloperController(IDeveloperService developerService, IMapper mapper)
     {

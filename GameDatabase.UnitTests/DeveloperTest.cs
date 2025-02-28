@@ -36,18 +36,18 @@ public class DeveloperTest
         Assert.Equal(newWebSite, developer.WebSite);
     }
     
-    [Fact]
-    public void ChangeWebSite_WhenNewWebSiteNullOrEmpty_Fail()
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    public void ChangeWebSite_WhenNewWebSiteNullOrEmpty_Fail(string newWebsite)
     {
         // Arrange
         var developer = Developer.Factory("Test Developer", DateTime.Now, "www.currentwebsite.com");
 
         // Act
-        bool resultWithNull = developer.ChangeWebSite(null);
-        bool resultWithEmpty = developer.ChangeWebSite("");
+        bool result = developer.ChangeWebSite(newWebsite);
 
         // Assert
-        Assert.False(resultWithNull, "Website change should fail for null input.");
-        Assert.False(resultWithEmpty, "Website change should fail for empty string input.");
+        Assert.False(result, "Website invalid.");
     }
 }
