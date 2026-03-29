@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using AutoMapper;
+using GameDatabase.API.MapperExtensions;
 using GameDatabase.API.ViewModels;
 using GameDatabase.Domain.AggregatesModel.GameAggregate;
 using GameDatabase.Domain.AggregatesModel.GameAggregate.Interfaces;
@@ -14,12 +15,10 @@ namespace GameDatabase.API.Controllers.v1;
 public class DeveloperController : ControllerBase
 {
     private readonly IDeveloperService _developerService;
-    private readonly IMapper _mapper;
 
-    public DeveloperController(IDeveloperService developerService, IMapper mapper)
+    public DeveloperController(IDeveloperService developerService)
     {
         _developerService = developerService;
-        _mapper = mapper;
     }
 
     /// <summary>
@@ -32,8 +31,8 @@ public class DeveloperController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetDeveloperById(int id)
     {
-        var developers = await _developerService.GetById(id);
-        var result = _mapper.Map<DeveloperOutputModel>(developers);
+        var developer = await _developerService.GetById(id);
+        var result = developer.ToViewModel();
         if (result != null)
             return Ok(result);
         return NotFound();
@@ -49,7 +48,7 @@ public class DeveloperController : ControllerBase
     public async Task<IActionResult> GetDevelopers()
     {
         var developers = await _developerService.GetAll();
-        var result = _mapper.Map<IEnumerable<DeveloperOutputModel>>(developers);
+        var result = developers.ToViewModelList();
         return Ok(result);
     }
 
@@ -63,14 +62,14 @@ public class DeveloperController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
     public async Task<IActionResult> NewDeveloper(DeveloperInputModel inputModel)
     {
-        var developer = _mapper.Map<Developer>(inputModel);
+        var developer = inputModel.ToEntity();
         var created = await _developerService.CreateDeveloper(developer);
         if (created.Erros.Any())
         {
             return BadRequest(created.Erros.Select(x=> x.ErrorMessage));
         }
 
-        var developerOutput = _mapper.Map<DeveloperOutputModel>(created);
+        var developerOutput = created.ToViewModel();
         return Ok(developerOutput);
     }
 }

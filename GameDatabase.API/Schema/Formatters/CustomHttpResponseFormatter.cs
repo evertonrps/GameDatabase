@@ -7,7 +7,7 @@ namespace GameDatabase.API.Schema.Formatters;
 public class CustomHttpResponseFormatter : DefaultHttpResponseFormatter
 {
     protected override HttpStatusCode OnDetermineStatusCode(
-        IQueryResult result, FormatInfo format,
+        IOperationResult result, FormatInfo format,
         HttpStatusCode? proposedStatusCode)
     {
         if (result.Errors?.Count > 0 &&

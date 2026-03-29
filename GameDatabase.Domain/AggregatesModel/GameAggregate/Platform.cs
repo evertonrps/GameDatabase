@@ -18,7 +18,7 @@ public class Platform : Entity<Platform>
     //EF
     public virtual ICollection<GamePlatform> GamePlatform { get; set; }
 
-    public static Platform Factory(string description, int platformTypeId)
+    public static Platform Factory(string description)
     {
         var platform = new Platform(description);
         platform.ValidateNow(new PlatformValidator(), platform);
