@@ -2,7 +2,7 @@ namespace GameDatabase.API.ViewModels;
 
 public class GamePlatformModel
 {
-    public int GameId { get; set; }
+    public string GameId { get; set; }
 
-    public int PlatformId { get; set; }
+    public string PlatformId { get; set; }
 }

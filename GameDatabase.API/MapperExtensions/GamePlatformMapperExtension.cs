@@ -11,7 +11,7 @@ public static class GamePlatformMapperExtension
         return new GamePlatformModel
         {
             GameId = entity.GameId,
-            PlatformId = entity.PlatformId,
+            PlatformId = entity.PlatformId
         };
     }
 

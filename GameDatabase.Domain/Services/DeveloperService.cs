@@ -38,13 +38,13 @@ public class DeveloperService : IDeveloperService
         catch (Exception e)
         {
             _logger.LogError(e, "Fail create new developer");
-            developer.Erros.Add(new ValidationFailure("",e.Message));
+            developer.Erros.Add(new ValidationFailure("", e.Message));
         }
 
         return developer;
     }
 
-    public async Task<Developer> GetById(int id)
+    public async Task<Developer> GetById(string id)
     {
         try
         {

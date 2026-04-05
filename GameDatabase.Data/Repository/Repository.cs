@@ -23,7 +23,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         return obj;
     }
 
-    public virtual void Delete(int id)
+    public virtual void Delete(string id)
     {
         DbSet.Remove(DbSet.Find(id));
     }
@@ -90,7 +90,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
     }
 
-    public virtual async Task<TEntity> GetById(int id)
+    public virtual async Task<TEntity> GetById(string id)
     {
         return await DbSet.AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
     }

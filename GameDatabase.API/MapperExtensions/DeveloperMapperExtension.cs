@@ -12,8 +12,8 @@ public static class DeveloperMapperExtension
         {
             Id = entity.Id,
             Name = entity.Name,
-            Founded =  entity.Founded,
-            WebSite =  entity.WebSite,
+            Founded = entity.Founded,
+            WebSite = entity.WebSite
         };
     }
 
@@ -31,5 +31,4 @@ public static class DeveloperMapperExtension
     {
         return models?.Select(c => c.ToEntity());
     }
-    
 }

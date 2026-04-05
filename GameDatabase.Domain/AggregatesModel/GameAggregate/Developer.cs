@@ -8,8 +8,9 @@ public class Developer : Entity<Developer>
     {
     }
 
-    private Developer(string name, DateTime founded, string webSite)
+    private Developer(string name, DateTime founded, string webSite, string id)
     {
+        Id = id;
         Name = name;
         Founded = founded;
         WebSite = webSite;
@@ -31,9 +32,12 @@ public class Developer : Entity<Developer>
         return true;
     }
 
-    public static Developer Factory(string name, DateTime founded, string webSite)
+    public static Developer Factory(string name, DateTime founded, string webSite, string? id = null)
     {
-        var developer = new Developer(name, founded, webSite);
+        if (string.IsNullOrEmpty(id))
+            id = Guid.NewGuid().ToString();
+
+        var developer = new Developer(name, founded, webSite, id);
         developer.ValidateNow(new DeveloperValidator(), developer);
         return developer;
     }

@@ -13,6 +13,7 @@ public static class GameMapperExtension
             Id = entity.Id,
             Title = entity.Title,
             Description = entity.Description,
+            DeveloperId = entity.DeveloperId
         };
     }
 
@@ -30,5 +31,4 @@ public static class GameMapperExtension
     {
         return models?.Select(c => c.ToEntity());
     }
-    
 }

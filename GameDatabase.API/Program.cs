@@ -42,12 +42,11 @@ builder.Services.AddSwaggerGen(s =>
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
-    
+
     s.AddSecurityRequirement(document => new OpenApiSecurityRequirement
     {
         [new OpenApiSecuritySchemeReference("Bearer", document)] = []
-    } );
-    
+    });
 });
 
 //builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); remover

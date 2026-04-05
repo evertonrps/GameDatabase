@@ -36,7 +36,7 @@ public class GameService : IGameService
         }
     }
 
-    public async Task<Game> GetById(int id)
+    public async Task<Game> GetById(string id)
     {
         try
         {

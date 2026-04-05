@@ -10,14 +10,14 @@ public static class PlatformMapperExtension
         if (entity == null) return null;
         return new PlatformModel
         {
-            Id =  entity.Id,
-            Description =  entity.Description,
+            Id = entity.Id,
+            Description = entity.Description
         };
     }
 
     public static Platform? ToEntity(this PlatformModel? model)
     {
-        return model == null ? null :  Platform.Factory(model.Description);
+        return model == null ? null : Platform.Factory(model.Description);
     }
 
     public static IEnumerable<PlatformModel?>? ToViewModelList(this IEnumerable<Platform?>? entities)

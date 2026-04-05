@@ -6,5 +6,5 @@ public interface IGamePlatformService
 {
     public Task<IEnumerable<GamePlatform>> GetAll();
     public Task<bool> CreateGamePlatform(GamePlatform gamePlatform);
-    public Task<GamePlatform> GetById(int id);
+    public Task<GamePlatform> GetById(string id);
 }
