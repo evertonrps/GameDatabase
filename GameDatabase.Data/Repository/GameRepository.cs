@@ -1,6 +1,7 @@
 ﻿using GameDatabase.Data.Context;
 using GameDatabase.Domain.AggregatesModel.GameAggregate;
 using GameDatabase.Domain.AggregatesModel.GameAggregate.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameDatabase.Data.Repository;
 
@@ -12,6 +13,13 @@ public class GameRepository : Repository<Game>, IGameRepository
     public GameRepository(GameDatabaseContext context) : base(context)
     {
         _context = context;
+    }
+
+    public async Task<IEnumerable<Game>> GetByDeveloperIdAsync(string developerId)
+    {
+        return await _context.Games
+            .Where(g => g.DeveloperId == developerId)
+            .ToListAsync();
     }
 
     public IEnumerable<Game> RecuperaGamesCompletos()

@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\GameDatabase.AI\GameDatabase.AI.csproj"/>
         <ProjectReference Include="..\GameDatabase.Data\GameDatabase.Data.csproj"/>
     </ItemGroup>
 

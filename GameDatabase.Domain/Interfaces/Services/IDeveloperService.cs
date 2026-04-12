@@ -7,4 +7,5 @@ public interface IDeveloperService
     public Task<IEnumerable<Developer>> GetAll();
     public Task<Developer?> CreateDeveloper(Developer developer);
     public Task<Developer> GetById(string id);
+    Task<Developer> GetByName(string name);
 }

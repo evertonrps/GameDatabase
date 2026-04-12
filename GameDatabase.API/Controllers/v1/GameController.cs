@@ -47,6 +47,24 @@ public class GameController : ControllerBase
     }
 
     /// <summary>
+    ///     Get all games for a specific developer.
+    /// </summary>
+    /// <param name="developerId">The ID of the developer.</param>
+    /// <returns>List of games belonging to the developer.</returns>
+    [HttpGet("developer/{developerId}/games")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetByDeveloper(string developerId)
+    {
+        var games = await _gameService.GetByDeveloperId(developerId);
+        if (games == null || !games.Any())
+            return NotFound();
+
+        var ret = games.ToViewModelList();
+        return Ok(ret);
+    }
+
+    /// <summary>
     ///     Create a new game.
     /// </summary>
     /// <param name="model">The game model.</param>

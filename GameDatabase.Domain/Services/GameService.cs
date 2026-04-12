@@ -48,4 +48,9 @@ public class GameService : IGameService
             return default;
         }
     }
+
+    public async Task<IEnumerable<Game>> GetByDeveloperId(string developerId)
+    {
+        return await _repository.GetByDeveloperIdAsync(developerId);
+    }
 }

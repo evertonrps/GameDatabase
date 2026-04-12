@@ -1,4 +1,5 @@
-﻿using GameDatabase.Data.Context;
+﻿using GameDatabase.AI.Service;
+using GameDatabase.Data.Context;
 using GameDatabase.Data.Repository;
 using GameDatabase.Domain.AggregatesModel.GameAggregate.Interfaces;
 using GameDatabase.Domain.Interfaces.Services;
@@ -24,6 +25,7 @@ public static class BootStrapper
         services.AddScoped(typeof(IGameService), typeof(GameService));
         services.AddScoped(typeof(IPlatformService), typeof(PlatformService));
         services.AddScoped(typeof(IGamePlatformService), typeof(GamePlatformService));
+        services.AddScoped(typeof(IIaService), typeof(IaService));
 
         //Repositories
         services.AddScoped(typeof(IGameRepository), typeof(GameRepository));

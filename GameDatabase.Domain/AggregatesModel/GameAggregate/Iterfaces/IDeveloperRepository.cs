@@ -4,4 +4,5 @@ namespace GameDatabase.Domain.AggregatesModel.GameAggregate.Interfaces;
 
 public interface IDeveloperRepository : IRepository<Developer>
 {
+    Task<Developer?> GetByName(string name);
 }

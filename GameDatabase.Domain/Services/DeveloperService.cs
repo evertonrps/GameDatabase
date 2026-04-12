@@ -56,4 +56,17 @@ public class DeveloperService : IDeveloperService
             return default;
         }
     }
+
+    public async Task<Developer> GetByName(string name)
+    {
+        try
+        {
+            return await _developerRepository.GetByName(name);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Erro ao buscar developer por nome");
+            return default;
+        }
+    }
 }

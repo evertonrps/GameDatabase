@@ -38,6 +38,27 @@ public class DeveloperController : ControllerBase
         return NotFound();
     }
 
+    // GET api/v1/developer/name/{name}
+    /// <summary>
+    ///     Retrieves information from a developer by name.
+    /// </summary>
+    /// <param name="name">Developer name.</param>
+    /// <returns>Developer details.</returns>
+    [HttpGet("name/{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeveloperOutputModel))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetDeveloperByName(string name)
+    {
+        var developer = await _developerService.GetByName(name);
+        var result = developer.ToViewModel();
+        if (result != null)
+            return Ok(result);
+
+        return NotFound();
+    }
+
     // GET api/v1/developer
     /// <summary>
     ///     Lists all registered developers.
