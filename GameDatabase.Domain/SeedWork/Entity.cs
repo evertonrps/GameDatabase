@@ -2,7 +2,7 @@
 
 public abstract class Entity<T> : BaseValidator
 {
-    public int Id { get; protected set; }
+    public string Id { get; protected set; }
 
     //    public abstract bool IsValid();
 

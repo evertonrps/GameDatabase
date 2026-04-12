@@ -6,5 +6,6 @@ public interface IGameService
 {
     public Task<IEnumerable<Game>> GetAll();
     public Task<bool> CreateGame(Game developer);
-    public Task<Game> GetById(int id);
+    public Task<Game> GetById(string id);
+    Task<IEnumerable<Game>> GetByDeveloperId(string developerId);
 }

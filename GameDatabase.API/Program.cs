@@ -4,7 +4,7 @@ using GameDatabase.API.Filters;
 using GameDatabase.API.Schema.Formatters;
 using GameDatabase.API.Schema.Mutations;
 using GameDatabase.IoC;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Serilog;
 using Path = System.IO.Path;
 
@@ -43,26 +43,13 @@ builder.Services.AddSwaggerGen(s =>
         Scheme = "Bearer"
     });
 
-    s.AddSecurityRequirement(new OpenApiSecurityRequirement
+    s.AddSecurityRequirement(document => new OpenApiSecurityRequirement
     {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                },
-                Scheme = "oauth2",
-                Name = "Bearer",
-                In = ParameterLocation.Header
-            },
-            new List<string>()
-        }
+        [new OpenApiSecuritySchemeReference("Bearer", document)] = []
     });
 });
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); remover
 BootStrapper.ConfigureServices(builder.Services);
 builder.Host.UseSerilog(Log.Logger);
 

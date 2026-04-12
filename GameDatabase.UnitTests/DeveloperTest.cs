@@ -8,9 +8,9 @@ public class DeveloperTest
     public void CreateDeveloperInstance_Success()
     {
         // Arrange
-        string name = "Test Developer";
-        DateTime founded = DateTime.Now.AddYears(-2);
-        string webSite = "http://site.com";
+        var name = "Test Developer";
+        var founded = DateTime.Now.AddYears(-2);
+        var webSite = "http://site.com";
 
         // Act
         var developer = Developer.Factory(name, founded, webSite);
@@ -20,22 +20,22 @@ public class DeveloperTest
         Assert.Equal(founded, developer.Founded);
         Assert.Equal(webSite, developer.WebSite);
     }
-    
+
     [Fact]
     public void ChangeWebSite_WhenNewWebSiteProvided_Success()
     {
         // Arrange
         var developer = Developer.Factory("Test Developer", DateTime.Now, "www.currentwebsite.com");
-        string newWebSite = "www.newwebsite.com";
+        var newWebSite = "www.newwebsite.com";
 
         // Act
-        bool result = developer.ChangeWebSite(newWebSite);
+        var result = developer.ChangeWebSite(newWebSite);
 
         // Assert
         Assert.True(result, "Changing website failed.");
         Assert.Equal(newWebSite, developer.WebSite);
     }
-    
+
     [Theory]
     [InlineData("")]
     [InlineData(null)]
@@ -45,7 +45,7 @@ public class DeveloperTest
         var developer = Developer.Factory("Test Developer", DateTime.Now, "www.currentwebsite.com");
 
         // Act
-        bool result = developer.ChangeWebSite(newWebsite);
+        var result = developer.ChangeWebSite(newWebsite);
 
         // Assert
         Assert.False(result, "Website invalid.");

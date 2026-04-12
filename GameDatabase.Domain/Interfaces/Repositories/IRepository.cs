@@ -9,11 +9,11 @@ public interface IRepository<TEntity> : IDisposable where TEntity : Entity<TEnti
 
     Task<TEntity> Add(TEntity obj);
 
-    Task<TEntity> GetById(int id);
+    Task<TEntity> GetById(string id);
 
     void Update(TEntity obj);
 
-    void Delete(int id);
+    void Delete(string id);
 
     Task<IEnumerable<TEntity>> GetByFunc(Expression<Func<TEntity, bool>> predicate);
     Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> match, string include = null);

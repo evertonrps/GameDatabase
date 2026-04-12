@@ -8,15 +8,15 @@ public class GamePlatform : Entity<GamePlatform>
     {
     }
 
-    public GamePlatform(int gameID, int platformID)
+    public GamePlatform(string gameID, string platformID)
     {
         GameId = gameID;
         PlatformId = platformID;
     }
 
-    public int GameId { get; set; }
+    public string GameId { get; set; }
 
-    public int PlatformId { get; set; }
+    public string PlatformId { get; set; }
 
     //EF
     public virtual Game Game { get; set; }

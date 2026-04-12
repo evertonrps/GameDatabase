@@ -15,7 +15,7 @@ public class DeveloperQuery
         return default;
     }
 
-    public async Task<Developer> GetDeveloperById([Service] IDeveloperService developerService, int id)
+    public async Task<Developer> GetDeveloperById([Service] IDeveloperService developerService, string id)
     {
         return await developerService.GetById(id);
     }

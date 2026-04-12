@@ -12,7 +12,7 @@ public class PlatformQuery
         return await platformService.GetAll();
     }
 
-    public async Task<Platform> GetPlatformById([Service] IPlatformService platformService, int id)
+    public async Task<Platform> GetPlatformById([Service] IPlatformService platformService, string id)
     {
         return await platformService.GetById(id);
     }

@@ -1,8 +1,6 @@
 using Asp.Versioning;
-using AutoMapper;
+using GameDatabase.API.MapperExtensions;
 using GameDatabase.API.ViewModels;
-using GameDatabase.Domain.AggregatesModel.GameAggregate;
-using GameDatabase.Domain.AggregatesModel.GameAggregate.Interfaces;
 using GameDatabase.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,63 +12,86 @@ namespace GameDatabase.API.Controllers.v1;
 public class DeveloperController : ControllerBase
 {
     private readonly IDeveloperService _developerService;
-    private readonly IMapper _mapper;
 
-    public DeveloperController(IDeveloperService developerService, IMapper mapper)
+    public DeveloperController(IDeveloperService developerService)
     {
         _developerService = developerService;
-        _mapper = mapper;
     }
 
+    // GET api/v1/developer/{id}
     /// <summary>
-    /// Get Developer by id
+    ///     Retrieves information from a developer by identifier.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique developer identifier.</param>
+    /// <returns>Developer details.</returns>
+    [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeveloperOutputModel))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetDeveloperById(int id)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetDeveloperById(string id)
     {
-        var developers = await _developerService.GetById(id);
-        var result = _mapper.Map<DeveloperOutputModel>(developers);
+        var developer = await _developerService.GetById(id);
+        var result = developer.ToViewModel();
         if (result != null)
             return Ok(result);
         return NotFound();
     }
 
+    // GET api/v1/developer/name/{name}
     /// <summary>
-    ///  List all developers 
+    ///     Retrieves information from a developer by name.
     /// </summary>
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DeveloperOutputModel>))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+    /// <param name="name">Developer name.</param>
+    /// <returns>Developer details.</returns>
+    [HttpGet("name/{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeveloperOutputModel))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetDeveloperByName(string name)
+    {
+        var developer = await _developerService.GetByName(name);
+        var result = developer.ToViewModel();
+        if (result != null)
+            return Ok(result);
+
+        return NotFound();
+    }
+
+    // GET api/v1/developer
+    /// <summary>
+    ///     Lists all registered developers.
+    /// </summary>
+    /// <returns>A collection of developers.</returns>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DeveloperOutputModel>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetDevelopers()
     {
         var developers = await _developerService.GetAll();
-        var result = _mapper.Map<IEnumerable<DeveloperOutputModel>>(developers);
+        var result = developers.ToViewModelList();
         return Ok(result);
     }
 
+    // POST api/v1/developer
     /// <summary>
-    /// Create a new developer
+    ///     Create a new developer.
     /// </summary>
-    /// <param name="inputModel">DeveloperModel</param>
+    /// <param name="inputModel">Model</param>
+    /// <returns>Developer information created.</returns>
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeveloperOutputModel))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(DeveloperOutputModel))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string[]))]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> NewDeveloper(DeveloperInputModel inputModel)
     {
-        var developer = _mapper.Map<Developer>(inputModel);
+        var developer = inputModel.ToEntity();
         var created = await _developerService.CreateDeveloper(developer);
-        if (created.Erros.Any())
-        {
-            return BadRequest(created.Erros.Select(x=> x.ErrorMessage));
-        }
+        if (created.Erros.Any()) return BadRequest(created.Erros.Select(x => x.ErrorMessage));
 
-        var developerOutput = _mapper.Map<DeveloperOutputModel>(created);
+        var developerOutput = created.ToViewModel();
         return Ok(developerOutput);
     }
 }

@@ -16,14 +16,14 @@ public class DeveloperMutation
 
     [Error(typeof(MyCustomErrorA))]
     [Error(typeof(MyCustomErrorB))]
-    public async Task<MutationResult<Developer>> CreateDeveloper(string name, DateTime founded, string site)
+    public async Task<FieldResult<Developer>> CreateDeveloper(string name, DateTime founded, string site)
     {
         var errors = new List<object>();
         if (founded > DateTime.Today) errors.Add(new MyCustomErrorA("Data inválida"));
 
         if (name == "string") errors.Add(new MyCustomErrorB("Name invalido"));
 
-        if (errors.Count > 0) return new MutationResult<Developer>(errors);
+        if (errors.Count > 0) return new FieldResult<Developer>(errors);
         return await _developerService.CreateDeveloper(Developer.Factory(name, founded, site));
     }
 }

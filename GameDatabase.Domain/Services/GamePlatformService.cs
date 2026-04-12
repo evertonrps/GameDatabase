@@ -36,7 +36,7 @@ public class GamePlatformService : IGamePlatformService
         }
     }
 
-    public async Task<GamePlatform> GetById(int id)
+    public async Task<GamePlatform> GetById(string id)
     {
         try
         {

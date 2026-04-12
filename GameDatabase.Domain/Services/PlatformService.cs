@@ -37,7 +37,7 @@ public class PlatformService : IPlatformService
         }
     }
 
-    public async Task<Platform> GetById(int id)
+    public async Task<Platform> GetById(string id)
     {
         try
         {

@@ -36,7 +36,7 @@ public class GameService : IGameService
         }
     }
 
-    public async Task<Game> GetById(int id)
+    public async Task<Game> GetById(string id)
     {
         try
         {
@@ -47,5 +47,10 @@ public class GameService : IGameService
             _logger.LogError(e, "Falha ao buscar game");
             return default;
         }
+    }
+
+    public async Task<IEnumerable<Game>> GetByDeveloperId(string developerId)
+    {
+        return await _repository.GetByDeveloperIdAsync(developerId);
     }
 }

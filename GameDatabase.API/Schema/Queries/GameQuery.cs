@@ -12,7 +12,7 @@ public class GameQuery
         return await gameService.GetAll();
     }
 
-    public async Task<Game> GetGameById([Service] IGameService gameService, int id)
+    public async Task<Game> GetGameById([Service] IGameService gameService, string id)
     {
         return await gameService.GetById(id);
     }
