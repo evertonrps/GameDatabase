@@ -7,12 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Agents.AI" Version="1.1.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.5"/>
-        <PackageReference Include="OllamaSharp" Version="5.4.25"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\GameDatabase.Domain\GameDatabase.Domain.csproj"/>
     </ItemGroup>
 

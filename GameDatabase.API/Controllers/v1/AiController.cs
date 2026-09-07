@@ -10,7 +10,7 @@ namespace GameDatabase.API.Controllers.v1;
 public class AiController : ControllerBase
 {
     private readonly IIaService _service;
-    
+
     public AiController(IIaService service)
     {
         _service = service;
@@ -19,10 +19,7 @@ public class AiController : ControllerBase
     [HttpPost("analisar")]
     public async Task<IActionResult> AnalisarDados([FromBody] string prompt)
     {
-        if (string.IsNullOrWhiteSpace(prompt))
-        {
-            return BadRequest("Prompt cannot be null or whitespace");
-        }
+        if (string.IsNullOrWhiteSpace(prompt)) return BadRequest("Prompt cannot be null or whitespace");
 
         var result = await _service.ExecuteAsync(prompt);
         return Ok(result);

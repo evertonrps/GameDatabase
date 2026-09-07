@@ -12,13 +12,14 @@ namespace GameDatabase.AI.Service;
 
 public class IaService : IIaService
 {
+    private readonly AIAgent _agent;
+    private readonly IConfiguration _configuration;
     private readonly IDeveloperService _developerService;
     private readonly IGameService _gameService;
-    private readonly IConfiguration _configuration;
     private readonly ILogger<IaService> _logger;
-    private readonly AIAgent _agent;
 
-    public IaService(IDeveloperService developerService, IGameService gameService, IConfiguration configuration, ILogger<IaService> logger)
+    public IaService(IDeveloperService developerService, IGameService gameService, IConfiguration configuration,
+        ILogger<IaService> logger)
     {
         _developerService = developerService;
         _gameService = gameService;

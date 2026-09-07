@@ -4,6 +4,7 @@ using GameDatabase.Data.Repository;
 using GameDatabase.Domain.AggregatesModel.GameAggregate.Interfaces;
 using GameDatabase.Domain.Interfaces.Services;
 using GameDatabase.Domain.Services;
+using GameDatabase.Sse;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
@@ -26,11 +27,14 @@ public static class BootStrapper
         services.AddScoped(typeof(IPlatformService), typeof(PlatformService));
         services.AddScoped(typeof(IGamePlatformService), typeof(GamePlatformService));
         services.AddScoped(typeof(IIaService), typeof(IaService));
+        services.AddScoped(typeof(INotificationService), typeof(NotificationService));
 
         //Repositories
         services.AddScoped(typeof(IGameRepository), typeof(GameRepository));
         services.AddScoped(typeof(IDeveloperRepository), typeof(DeveloperRepository));
         services.AddScoped(typeof(IPlatformRepository), typeof(PlatformRepository));
         services.AddScoped(typeof(IGamePlatformRepository), typeof(GamePlatformRespository));
+
+        services.AddSingleton<ISseHub, SseHub>();
     }
 }
